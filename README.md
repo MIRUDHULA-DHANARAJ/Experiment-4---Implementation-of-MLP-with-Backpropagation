@@ -119,6 +119,90 @@ Normalize our dataset.
 
 ## PROGRAM 
 
-## OUTPUT 
+DEVELOPED BY: Mirudhula D
+REG. NO: 212221230060
 
-## RESULT
+```
+import pandas as pd
+import sklearn
+from sklearn import preprocessing
+from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import StandardScaler
+from sklearn.neural_network import MLPClassifier
+from sklearn.metrics import classification_report, confusion_matrix
+
+df = pd.read_csv('IRIS.csv')
+df.head
+
+names = ['sepal-length','sepal-width','petal-length','petal-width','Class']
+
+# Take first 4 columns ans assign them to variable "X"
+X = df.iloc[:,0:4]
+# Take first 5th columns and assign them to variable "Y". Object dtype refers to strings
+Y = df.select_dtypes(include=[object])
+X.head()
+Y.head()
+
+# Y actually contains all categories or classes
+Y.species.unique()
+
+# Now transforming categorial into numerical values
+le = preprocessing.LabelEncoder()
+Y = Y.apply(le.fit_transform)
+Y.head()
+
+# Train and test split (80% of data into training set and 20% into test data)
+X_train, X_test, Y_train, Y_test = train_test_split(X,Y,test_size = 0.20)
+
+# Feature Scaling
+scaler = StandardScaler() 
+scaler.fit(X_train)
+X_train = scaler.transform(X_train)
+X_test = scaler.transform(X_test)
+mlp = MLPClassifier(hidden_layer_sizes=(10,10,10),max_iter=1000)
+mlp.fit(X_train,Y_train.values.ravel())
+predictions = mlp.predict(X_test)
+print(predictions)
+
+# Evaluation of algorithm performance in classifying flowers
+print(confusion_matrix(Y_test,predictions))
+print(classification_report(Y_test,predictions))
+
+```
+
+## OUTPUT :
+## First five rows:
+
+![image](https://user-images.githubusercontent.com/94828147/232397921-1680b3b3-7f87-42af-ae05-6ec130a4efbd.png)
+
+## First five rows of X:
+
+![image](https://user-images.githubusercontent.com/94828147/232397974-551a8c5c-d7a5-465d-84d2-1d5c430d6f92.png)
+
+## First five rows of Y:
+
+![image](https://user-images.githubusercontent.com/94828147/232398049-9d4c93ed-8392-4205-9eb9-d4e9b7992515.png)
+
+## Unique values of Y:
+
+![image](https://user-images.githubusercontent.com/94828147/232398128-bc354025-db95-49f1-b7d9-2de401e6f802.png)
+
+## Transforming Categorical to numerical values:
+
+![image](https://user-images.githubusercontent.com/94828147/232398179-b80a2918-9298-4480-ab22-f460767a5016.png)
+
+## Predictions:
+
+![image](https://user-images.githubusercontent.com/94828147/232398286-3afbbc64-8810-4fa9-a144-4e714e9a2d8b.png)
+
+## Confusion matrix:
+
+![image](https://user-images.githubusercontent.com/94828147/232398399-7af9a733-6067-444c-b1ae-90a1d5f93ea5.png)
+
+## Classification report:
+
+![image](https://user-images.githubusercontent.com/94828147/232398439-08b70b23-2749-432c-ac25-a0fd12862699.png)
+
+## RESULT:
+
+Thus, a program to implement Multilayer Perceptron for Multi Classification is successfully created and executed.
